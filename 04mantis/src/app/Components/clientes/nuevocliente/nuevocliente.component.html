@@ -1,0 +1,111 @@
+<div class="card my-5">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <h3 class="mb-0">
+        <b>{{ titulo }}</b>
+      </h3>
+    </div>
+    <form [formGroup]="frm_cliente" (ngSubmit)="grabar()">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label class="form-label" for="Nombres">Nombres</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Nombres"
+              id="Nombres"
+              formControlName="Nombres"
+              (blur)="cambiarLetras()"
+              autofocus
+            />
+            <div *ngIf="frm_cliente.get('Nombres').invalid && frm_cliente.get('Nombres').touched">
+              <small *ngIf="frm_cliente.get('Nombres').hasError('required')" style="color: red" class="mt-2 p-2">
+                Los nombres son requeridos
+              </small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label class="form-label" for="Cedula">Cedula</label>
+            <input type="text" class="form-control" id="Cedula" placeholder="Número de cedula" formControlName="Cedula" />
+            <div *ngIf="frm_cliente.get('Cedula').invalid && frm_cliente.get('Cedula').touched">
+              <small *ngIf="frm_cliente.get('Cedula').hasError('required')" style="color: red" class="mt-2 p-2">
+                La cedula es requerida
+              </small>
+              <small *ngIf="frm_cliente.get('Cedula').hasError('cedulaInvalida')" style="color: red" class="mt-2 p-2">
+                La cedula ingresada no es correcta
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label" for="Direccion">Direccion</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Direccion"
+            placeholder="Direccion"
+            formControlName="Direccion"
+            (blur)="cambiarLetras()"
+          />
+          <div *ngIf="frm_cliente.get('Direccion').invalid && frm_cliente.get('Direccion').touched">
+            <small *ngIf="frm_cliente.get('Direccion').hasError('required')" style="color: red" class="mt-2 p-2">
+              La dirección es requerida
+            </small>
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" for="Telefono">Telefono</label>
+          <input type="text" class="form-control" id="Telefono" placeholder="Telefono" formControlName="Telefono" maxlength="10" />
+          <!-- <div *ngIf="frm_cliente.get('Telefono').invalid && frm_cliente.get('Telefono').touched">
+              <small *ngIf="frm_cliente.get('Telefono').hasError('required')" style="color: red" class="mt-2 p-2">
+                El número de teléfono es requerido
+              </small>
+            </div> -->
+          @if (frm_cliente.get('Telefono').invalid && frm_cliente.get('Telefono').touched) {
+            <div>
+              @if (frm_cliente.get('Telefono').hasError('required')) {
+                <small style="color: red">El número de teléfono es requerido</small>
+              }
+              @if (frm_cliente.get('Telefono').hasError('minlength')) {
+                <small style="color: red">El número de telefono ingresado es incorrecto</small>
+              }
+            </div>
+          }
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" for="Correo">Correo</label>
+          <input type="email" class="form-control" id="Correo" placeholder="Correo" formControlName="Correo" />
+          <div *ngIf="frm_cliente.get('Correo').invalid && frm_cliente.get('Correo').touched">
+            <small *ngIf="frm_cliente.get('Correo').hasError('required')" style="color: red" class="mt-2 p-2">El correo es requerido</small>
+            <small *ngIf="frm_cliente.get('Correo').hasError('email')" style="color: red" class="mt-2 p-2">Registre un correo valido</small>
+          </div>
+        </div>
+        <div class="d-grid mt-3">
+          <button type="submit" class="btn btn-outline-primary" [disabled]="frm_cliente.invalid">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-checks"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#2c3e50"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M7 12l5 5l10 -10" />
+              <path d="M2 12l5 5m5 -5l5 -5" />
+            </svg>
+            {{ btn_save }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

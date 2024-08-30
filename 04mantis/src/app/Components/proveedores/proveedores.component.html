@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="{{ title }}" blockClass="pc-component">
+      <div class="col-md-12 col-xl-12">
+        <h5 class="mb-3">
+          <a href="nuevoproveedor" class="btn btn-outline-success">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-plus"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#2c3e50"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 5l0 14" />
+              <path d="M5 12l14 0" />
+            </svg>
+            Nuevo proveedor
+          </a>
+        </h5>
+        <div class="card tbl-card">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>IDPro</th>
+                  <th>Nombre Empresa</th>
+                  <th>Contacto</th>
+                  <th class="text-end">Telefono</th>
+                  <th class="text-end">Acciones</th>
+                </tr>
+              </thead>
+              <tbody class="table-light table-striped" id="tableProveedores">
+                @for (proveedor of listaProveedores; track $index) {
+                  <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ proveedor.idProveedores }}</td>
+                    <td>{{ proveedor.Nombre_Empresa }}</td>
+                    <td>{{ proveedor.Contacto_Empresa }}</td>
+                    <td class="text-end">{{ proveedor.Telefono_Contacto }}</td>
+                    <td class="text-end">
+                      <button
+                        type="button"
+                        class="btn btn-outline-warning"
+                        [routerLink]="['/editarproveedor/', proveedor.idProveedores]"
+                        title="Edit"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-edit"
+                          width="44"
+                          height="44"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#2c3e50"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                          <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                          <path d="M16 5l3 3" />
+                        </svg>
+                      </button>
+                      |
+                      <button type="button" class="btn btn-outline-danger" (click)="eliminar(proveedor.idProveedores)" title="Delete">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-eraser-off"
+                          width="44"
+                          height="44"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#2c3e50"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M3 3l18 18" />
+                          <path
+                            d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l5 -4.993m2.009 -2.01l3 -3a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41c-1.417 1.431 -2.406 2.432 -2.97 3m-2.02 2.043l-4.211 4.256"
+                          />
+                          <path d="M18 13.3l-6.3 -6.3" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
