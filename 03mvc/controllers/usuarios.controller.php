@@ -8,7 +8,7 @@ if ($method == "OPTIONS") {
     die();
 }
 
-include_once('../models/usuarios.model.php');
+require_once('../models/usuarios.model.php');
 
 error_reporting(0);
 $usuario = new UsuariosModel();
@@ -82,9 +82,10 @@ switch ($_GET["op"]) {
         }
         $nombreUsuario = $_POST["Nombre_Usuario"];
         $contrasenia = $_POST["Contrasenia"];
+
         $result = $usuario->login($nombreUsuario, $contrasenia);
         if ($result) {
-            echo json_encode(["success" => true]);
+            echo json_encode($result);
         } else {
             echo json_encode(["success" => false, "error" => "Invalid credentials."]);
         }

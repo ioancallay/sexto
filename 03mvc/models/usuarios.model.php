@@ -1,5 +1,5 @@
 <?php
-include_once('../config/config.php');
+require_once('../config/conexion.php');
 
 class UsuariosModel
 {
@@ -7,7 +7,7 @@ class UsuariosModel
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $cadena = "SELECT * FROM usuarios";
+        $cadena = "SELECT * FROM Usuarios";
         $datos = mysqli_query($con, $cadena);
         return $datos;
         $con->close();
@@ -16,7 +16,7 @@ class UsuariosModel
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $cadena = "SELECT * FROM usuarios WHERE idUsuarios = $idUsuarios";
+        $cadena = "SELECT * FROM Usuarios WHERE idUsuarios = $idUsuarios";
         $datos = mysqli_query($con, $cadena);
         return $datos;
         $con->close();
@@ -25,7 +25,7 @@ class UsuariosModel
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $cadena = "INSERT INTO usuarios (Nombre_Usuario, Contrasenia, Estado, Roles_idRoles) VALUES ('$Nombre_Usuario', '" . md5($Contrasenia) . "', $Estado, $Roles_idRoles)";
+        $cadena = "INSERT INTO Usuarios (Nombre_Usuario, Contrasenia, Estado, Roles_idRoles) VALUES ('$Nombre_Usuario', '" . md5($Contrasenia) . "', $Estado, $Roles_idRoles)";
         $datos = mysqli_query($con, $cadena);
         return $datos;
         $con->close();
@@ -34,7 +34,7 @@ class UsuariosModel
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $cadena = "UPDATE usuarios SET Nombre_Usuario = '$Nombre_Usuario', Contrasenia = '" . md5($Contrasenia) . "', Estado = $Estado, Roles_idRoles = $Roles_idRoles WHERE idUsuarios = $idUsuarios";
+        $cadena = "UPDATE Usuarios SET Nombre_Usuario = '$Nombre_Usuario', Contrasenia = '" . md5($Contrasenia) . "', Estado = $Estado, Roles_idRoles = $Roles_idRoles WHERE idUsuarios = $idUsuarios";
         $datos = mysqli_query($con, $cadena);
         return $datos;
         $con->close();
@@ -43,7 +43,7 @@ class UsuariosModel
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $cadena = "DELETE FROM usuarios WHERE idUsuarios = $idUsuarios";
+        $cadena = "DELETE FROM Usuarios WHERE idUsuarios = $idUsuarios";
         $datos = mysqli_query($con, $cadena);
         return $datos;
         $con->close();
@@ -52,11 +52,12 @@ class UsuariosModel
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $cadena = "SELECT * FROM usuarios WHERE Nombre_Usuario = '$Nombre_Usuario' and estado = 1"; // ' or 1=1 -- 
+        $cadena = "SELECT * FROM Usuarios WHERE Nombre_Usuario = '$Nombre_Usuario' and estado = 1"; // ' or 1=1 -- 
         $datos = mysqli_query($con, $cadena);
         if ($datos && mysqli_num_rows($datos) > 0) {
             $usuario = mysqli_fetch_assoc($datos);
-            if (password_verify(md5($Contrasenia), $usuario['Contrasenia'])) {
+            // if (password_verify(md5($Contrasenia), $usuario['Contrasenia'])) {
+            if (md5($Contrasenia) == $usuario['Contrasenia']) {
                 return $usuario;
             } else {
                 return false;

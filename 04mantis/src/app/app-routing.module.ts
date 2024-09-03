@@ -1,3 +1,4 @@
+import { UsuariosGuardGuard } from './Guards/usuarios-guard.guard';
 // angular import
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -21,54 +22,55 @@ const routes: Routes = [
         loadComponent: () => import('./demo/default/dashboard/dashboard.component').then((c) => c.DefaultComponent)
       },
       {
-        path: 'typography',
-        loadComponent: () => import('./demo/ui-component/typography/typography.component')
-      },
-      {
-        path: 'color',
-        loadComponent: () => import('./demo/ui-component/ui-color/ui-color.component')
-      },
-      {
         path: 'sample-page',
         loadComponent: () => import('./demo/other/sample-page/sample-page.component')
       },
       {
         path: 'proveedores',
-        loadComponent: () => import('./Components/proveedores/proveedores.component').then((c) => c.ProveedoresComponent)
+        loadComponent: () => import('./Components/proveedores/proveedores.component').then((c) => c.ProveedoresComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'nuevoproveedor',
         loadComponent: () =>
-          import('./Components/proveedores/nuevoproveedor/nuevoproveedor.component').then((c) => c.NuevoproveedorComponent)
+          import('./Components/proveedores/nuevoproveedor/nuevoproveedor.component').then((c) => c.NuevoproveedorComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'editarproveedor/:idProveedores',
         loadComponent: () =>
-          import('./Components/proveedores/nuevoproveedor/nuevoproveedor.component').then((c) => c.NuevoproveedorComponent)
+          import('./Components/proveedores/nuevoproveedor/nuevoproveedor.component').then((c) => c.NuevoproveedorComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'productos',
-        loadComponent: () => import('./Components/productos/productos.component').then((c) => c.ProductosComponent)
+        loadComponent: () => import('./Components/productos/productos.component').then((c) => c.ProductosComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'clientes',
-        loadComponent: () => import('./Components/clientes/clientes.component').then((c) => c.ClientesComponent)
+        loadComponent: () => import('./Components/clientes/clientes.component').then((c) => c.ClientesComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'nuevocliente',
-        loadComponent: () => import('./Components/clientes/nuevocliente/nuevocliente.component').then((c) => c.NuevoclienteComponent)
+        loadComponent: () => import('./Components/clientes/nuevocliente/nuevocliente.component').then((c) => c.NuevoclienteComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'editarcliente/:idClientes',
-        loadComponent: () => import('./Components/clientes/nuevocliente/nuevocliente.component').then((c) => c.NuevoclienteComponent)
+        loadComponent: () => import('./Components/clientes/nuevocliente/nuevocliente.component').then((c) => c.NuevoclienteComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'editarfactura/:idFactura',
-        loadComponent: () => import('./Components/facturas/nuevafactura/nuevafactura.component').then((m) => m.NuevafacturaComponent)
+        loadComponent: () => import('./Components/facturas/nuevafactura/nuevafactura.component').then((m) => m.NuevafacturaComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'nuevafactura',
-        loadComponent: () => import('./Components/facturas/nuevafactura/nuevafactura.component').then((m) => m.NuevafacturaComponent)
+        loadComponent: () => import('./Components/facturas/nuevafactura/nuevafactura.component').then((m) => m.NuevafacturaComponent),
+        // canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'facturas',

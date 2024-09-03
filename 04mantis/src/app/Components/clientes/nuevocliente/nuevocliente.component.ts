@@ -5,6 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IClientes } from 'src/app/Interfaces/iclientes';
 import { ClientesService } from 'src/app/Services/clientes.service';
 import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2/dist/sweetalert2.js'
+// import 'sweetalert2/src/sweetalert2.scss'
 
 @Component({
   selector: 'app-nuevocliente',
@@ -14,6 +16,7 @@ import Swal from 'sweetalert2';
   styleUrl: './nuevocliente.component.scss'
 })
 export class NuevoclienteComponent implements OnInit {
+  
   frm_cliente: FormGroup;
 
   idClientes: number = 0;

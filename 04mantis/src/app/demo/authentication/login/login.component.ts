@@ -14,32 +14,33 @@ import { IUsuarios } from '../../../Interfaces/iusuarios';
 })
 export default class LoginComponent {
   frm_login = new FormGroup({
-    nombre_usuario: new FormControl('', [Validators.required, Validators.email]),
-    contrasenia: new FormControl('', Validators.required)
+    Nombre_Usuario: new FormControl('', [Validators.required, Validators.email]),
+    Contrasenia: new FormControl('', Validators.required)
   });
-  constructor(private usuarioServicio: UsuariosService) {}
 
+  constructor(private ServicioUsuario: UsuariosService) {}
+
+  //TODO: Captura los datos del frm_usuarios y llama al método login
   login() {
     let usuario: IUsuarios = {
-      Nombre_Usuario: this.frm_login.controls['nombre_usuario'].value,
-      Contrasenia: this.frm_login.controls['contrasenia'].value
+      Nombre_Usuario: this.frm_login.controls['Nombre_Usuario'].value,
+      Contrasenia: this.frm_login.controls['Contrasenia'].value
     };
-    console.log(usuario);
-    this.usuarioServicio.login(usuario);
+    this.ServicioUsuario.login(usuario);
   }
   // public method
   SignInOptions = [
-    {
-      image: 'assets/images/authentication/google.svg',
-      name: 'Google'
-    },
-    {
-      image: 'assets/images/authentication/twitter.svg',
-      name: 'Twitter'
-    },
-    {
-      image: 'assets/images/authentication/facebook.svg',
-      name: 'Facebook'
-    }
+      {
+        image: 'assets/images/authentication/google.svg',
+        name: 'Google'
+      },
+      {
+        image: 'assets/images/authentication/twitter.svg',
+        name: 'Twitter'
+      },
+      {
+        image: 'assets/images/authentication/facebook.svg',
+        name: 'Facebook'
+      }
   ];
 }

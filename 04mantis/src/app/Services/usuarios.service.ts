@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { IUsuarios } from '../Interfaces/iusuarios';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { IUsuarios } from '../Interfaces/iusuarios';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuariosService {
   private loggedIn = new BehaviorSubject<boolean>(false);
-  apiurl = 'http://localhost/sexto/Proyectos/03MVC/controllers/usuarios.controller.php?op=';
+  apiurl = 'http://localhost/sexto/03MVC/controllers/usuarios.controller.php?op=';
   constructor(
     private lector: HttpClient,
     private navegacion: Router
@@ -36,9 +36,12 @@ export class UsuariosService {
     localStorage.clear();
     this.navegacion.navigate(['/login']);
   }
+
   isLoggedIn() {
+    console.log(this.loggedIn.asObservable());
     return this.loggedIn.asObservable();
   }
+
   checkLoginStatus() {
     const usuario = sessionStorage.getItem('nombreUsuario');
     if (usuario) {
