@@ -19,58 +19,60 @@ const routes: Routes = [
       },
       {
         path: 'dashboard/default',
-        loadComponent: () => import('./demo/default/dashboard/dashboard.component').then((c) => c.DefaultComponent)
+        loadComponent: () => import('./demo/default/dashboard/dashboard.component').then((c) => c.DefaultComponent),
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'sample-page',
-        loadComponent: () => import('./demo/other/sample-page/sample-page.component')
+        loadComponent: () => import('./demo/other/sample-page/sample-page.component'),
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'proveedores',
         loadComponent: () => import('./Components/proveedores/proveedores.component').then((c) => c.ProveedoresComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'nuevoproveedor',
         loadComponent: () =>
           import('./Components/proveedores/nuevoproveedor/nuevoproveedor.component').then((c) => c.NuevoproveedorComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'editarproveedor/:idProveedores',
         loadComponent: () =>
           import('./Components/proveedores/nuevoproveedor/nuevoproveedor.component').then((c) => c.NuevoproveedorComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'productos',
         loadComponent: () => import('./Components/productos/productos.component').then((c) => c.ProductosComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'clientes',
         loadComponent: () => import('./Components/clientes/clientes.component').then((c) => c.ClientesComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'nuevocliente',
         loadComponent: () => import('./Components/clientes/nuevocliente/nuevocliente.component').then((c) => c.NuevoclienteComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'editarcliente/:idClientes',
         loadComponent: () => import('./Components/clientes/nuevocliente/nuevocliente.component').then((c) => c.NuevoclienteComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'editarfactura/:idFactura',
         loadComponent: () => import('./Components/facturas/nuevafactura/nuevafactura.component').then((m) => m.NuevafacturaComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'nuevafactura',
         loadComponent: () => import('./Components/facturas/nuevafactura/nuevafactura.component').then((m) => m.NuevafacturaComponent),
-        // canActivate: [UsuariosGuardGuard]
+        canActivate: [UsuariosGuardGuard]
       },
       {
         path: 'facturas',
