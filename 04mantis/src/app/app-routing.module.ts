@@ -84,7 +84,7 @@ const routes: Routes = [
         canActivate: [UsuariosGuardGuard]
       },
       {
-        path: 'nuevaunidad',
+        path: 'nuevamedida',
         loadComponent: () => import('./Components/unidadmedida/nuevamedida/nuevamedida.component').then((m) => m.NuevamedidaComponent),
         canActivate: [UsuariosGuardGuard]
       },
