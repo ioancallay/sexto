@@ -33,6 +33,7 @@ export class UsuariosService {
       }
     });
   }
+
   logout() {
     sessionStorage.clear();
     localStorage.clear();
