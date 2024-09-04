@@ -77,6 +77,20 @@ const routes: Routes = [
       {
         path: 'facturas',
         loadComponent: () => import('./Components/facturas/facturas.component').then((m) => m.FacturasComponent)
+      },
+      {
+        path: 'editarmedida/:idUnidad_Medida',
+        loadComponent: () => import('./Components/unidadmedida/nuevamedida/nuevamedida.component').then((m) => m.NuevamedidaComponent),
+        canActivate: [UsuariosGuardGuard]
+      },
+      {
+        path: 'nuevaunidad',
+        loadComponent: () => import('./Components/unidadmedida/nuevamedida/nuevamedida.component').then((m) => m.NuevamedidaComponent),
+        canActivate: [UsuariosGuardGuard]
+      },
+      {
+        path: 'unidadmedida',
+        loadComponent: () => import('./Components/unidadmedida/unidadmedida.component').then((m) => m.UnidadmedidaComponent)
       }
     ]
   },
