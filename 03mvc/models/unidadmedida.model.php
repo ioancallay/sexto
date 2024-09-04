@@ -29,8 +29,7 @@ class UnidadDeMedida
         try {
             $con = new ClaseConectar();
             $con = $con->ProcedimientoConectar();
-            $cadena = "INSERT INTO Unidad_Medida(Detalle, Tipo) 
-                       VALUES ('$Detalle', '$Tipo')";
+            $cadena = "INSERT INTO Unidad_Medida(Detalle, Tipo) VALUES ('$Detalle', '$Tipo')";
             if (mysqli_query($con, $cadena)) {
                 return $con->insert_id; // Retorna el ID insertado
             } else {
@@ -48,11 +47,7 @@ class UnidadDeMedida
         try {
             $con = new ClaseConectar();
             $con = $con->ProcedimientoConectar();
-            $cadena = "UPDATE Unidad_Medida SET 
-                       Detalle='$Detalle',
-                       
-                       Tipo='$Tipo'
-                       WHERE idUnidad_Medida = $idUnidad_Medida";
+            $cadena = "UPDATE Unidad_Medida SET Detalle='$Detalle', Tipo='$Tipo' WHERE idUnidad_Medida = $idUnidad_Medida";
             if (mysqli_query($con, $cadena)) {
                 return $idUnidad_Medida; // Retorna el ID actualizado
             } else {
