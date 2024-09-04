@@ -115,6 +115,16 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'ant-design'
         // target: true,
         // external: true
+      },
+      {
+        id: 'unidadmedida',
+        title: 'Unidad Medida',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/unidadmedida',
+        icon: 'ant-design'
+        // target: true,
+        // external: true
       }
     ]
   },
