@@ -10,8 +10,8 @@ if ($method == "OPTIONS") {
 
 // Controlador de Unidad de Medida Tienda Cel@g
 
-require_once('../models/unidad_medida.model.php');
-error_reporting(0);
+require_once '../models/unidadmedida.model.php';
+error_reporting(1);
 $unidad = new UnidadDeMedida;
 
 switch ($_GET["op"]) {
@@ -37,13 +37,12 @@ switch ($_GET["op"]) {
         break;
 
     case 'insertar': // Procedimiento para insertar una nueva unidad de medida
-        if (!isset($_POST["Detalle"]) || !isset($_POST["Descripcion"]) || !isset($_POST["Tipo"])) {
+        if (!isset($_POST["Detalle"]) || !isset($_POST["Tipo"])) {
             echo json_encode(["error" => "Missing required parameters."]);
             exit();
         }
 
         $Detalle = $_POST["Detalle"];
-        
         $Tipo = $_POST["Tipo"];
 
         $datos = array();
@@ -52,14 +51,13 @@ switch ($_GET["op"]) {
         break;
 
     case 'actualizar': // Procedimiento para actualizar una unidad de medida existente
-        if (!isset($_POST["idUnidad_Medida"]) || !isset($_POST["Detalle"]) || !isset($_POST["Descripcion"]) || !isset($_POST["Tipo"])) {
+        if (!isset($_POST["idUnidad_Medida"]) || !isset($_POST["Detalle"]) || !isset($_POST["Tipo"])) {
             echo json_encode(["error" => "Missing required parameters."]);
             exit();
         }
 
         $idUnidad_Medida = intval($_POST["idUnidad_Medida"]);
         $Detalle = $_POST["Detalle"];
-        
         $Tipo = $_POST["Tipo"];
 
         $datos = array();

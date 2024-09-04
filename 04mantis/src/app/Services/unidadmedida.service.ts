@@ -7,7 +7,7 @@ import { IUnidadmedida } from '../Interfaces/iunidadmedida';
   providedIn: 'root'
 })
 export class UnidadmedidaService {
-  apiurl = 'http://localhost/sexto/03MVC/controllers/unidadmedida.controller.php?op=';
+  apiurl = 'http://localhost/sexto/03mvc/controllers/unidadmedida.controller.php?op=';
 
   constructor(private lector: HttpClient) {}
 

@@ -1,6 +1,6 @@
 <?php
 // Modelo de UnidadDeMedida
-require_once('../config/config.php');
+require_once('../config/conexion.php');
 
 class UnidadDeMedida
 {
@@ -24,7 +24,7 @@ class UnidadDeMedida
         return $datos;
     }
 
-    public function insertar($Detalle, $Descripcion, $Tipo) // insert into Unidad_Medida (...) values (...)
+    public function insertar($Detalle, $Tipo) // insert into Unidad_Medida (...) values (...)
     {
         try {
             $con = new ClaseConectar();
