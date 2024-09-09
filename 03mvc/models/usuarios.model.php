@@ -7,7 +7,7 @@ class UsuariosModel
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $cadena = "SELECT * FROM Usuarios";
+        $cadena = "SELECT u.Nombre_Usuario, u.Estado, r.Detalle FROM Usuarios u JOIN Roles r ON u.Roles_idRoles = r.idRoles";
         $datos = mysqli_query($con, $cadena);
         return $datos;
         $con->close();

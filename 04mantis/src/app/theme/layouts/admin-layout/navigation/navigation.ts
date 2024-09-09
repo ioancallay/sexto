@@ -36,34 +36,32 @@ export const NavigationItems: NavigationItem[] = [
       }
     ]
   },
-  // {
-  //   id: 'authentication',
-  //   title: 'Authentication',
-  //   type: 'group',
-  //   icon: 'icon-navigation',
-  //   children: [
-  //     {
-  //       id: 'login',
-  //       title: 'Login',
-  //       type: 'item',
-  //       classes: 'nav-item',
-  //       url: '/login',
-  //       icon: 'login',
-  //       target: true,
-  //       breadcrumbs: false
-  //     },
-  //     {
-  //       id: 'register',
-  //       title: 'Register',
-  //       type: 'item',
-  //       classes: 'nav-item',
-  //       url: '/register',
-  //       icon: 'profile',
-  //       target: true,
-  //       breadcrumbs: false
-  //     }
-  //   ]
-  // },
+  {
+    id: 'authentication',
+    title: 'Authentication',
+    type: 'group',
+    icon: 'icon-navigation',
+    children: [
+      //     {
+      //       id: 'login',
+      //       title: 'Login',
+      //       type: 'item',
+      //       classes: 'nav-item',
+      //       url: '/login',
+      //       icon: 'login',
+      //       target: true,
+      //       breadcrumbs: false
+      //     },
+      {
+        id: 'register',
+        title: 'Register',
+        type: 'item',
+        classes: 'nav-item',
+        url: '/register',
+        icon: 'profile'
+      }
+    ]
+  },
   {
     id: 'components',
     title: 'UI Components',
@@ -93,8 +91,6 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/clientes',
         icon: 'ant-design'
-        // target: true,
-        // external: true
       },
       {
         id: 'facturas',
@@ -103,8 +99,6 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/facturas',
         icon: 'ant-design'
-        // target: true,
-        // external: true
       },
       {
         id: 'iva',
@@ -113,8 +107,6 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/iva',
         icon: 'ant-design'
-        // target: true,
-        // external: true
       },
       {
         id: 'unidadmedida',
@@ -123,15 +115,13 @@ export const NavigationItems: NavigationItem[] = [
         classes: 'nav-item',
         url: '/unidadmedida',
         icon: 'ant-design'
-        // target: true,
-        // external: true
       }
     ]
   },
 
   {
-    id: 'other',
-    title: 'Other',
+    id: 'manage',
+    title: 'Manage',
     type: 'group',
     icon: 'icon-navigation',
     children: [
@@ -144,14 +134,12 @@ export const NavigationItems: NavigationItem[] = [
         icon: 'chrome'
       },
       {
-        id: 'document',
-        title: 'Document',
+        id: 'usuarios',
+        title: 'Usuarios',
         type: 'item',
         classes: 'nav-item',
-        url: 'https://codedthemes.gitbook.io/mantis-angular/',
-        icon: 'question',
-        target: true,
-        external: true
+        url: '/usuarios',
+        icon: 'user'
       }
     ]
   }

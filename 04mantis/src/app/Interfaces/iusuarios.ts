@@ -4,4 +4,5 @@ export interface IUsuarios {
   Contrasenia: string;
   Estado?: number;
   Roles_idRoles?: number;
+  Detalle?: string;
 }

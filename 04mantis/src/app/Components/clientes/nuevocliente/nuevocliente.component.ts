@@ -36,7 +36,7 @@ export class NuevoclienteComponent implements OnInit {
       Nombres: new FormControl('', Validators.required),
       Direccion: new FormControl('', Validators.required),
       Telefono: new FormControl('', Validators.required),
-      Cedula: new FormControl('', Validators.required),
+      Cedula: new FormControl('', [Validators.required, this.validadorCedulaEcuador]),
       Correo: new FormControl('', [Validators.required, Validators.email])
     });
 
@@ -133,7 +133,7 @@ export class NuevoclienteComponent implements OnInit {
   validadorCedulaEcuador(control: AbstractControl): ValidationErrors | null {
     const cedula = control.value;
     if (!cedula) return null;
-    if (cedula.length !== 10) return { cedulaInvalida: true };
+    if (cedula.length !== 10) return { cedulaIncompleta: true };
     const provincia = parseInt(cedula.substring(0, 2), 10);
     if (provincia < 1 || provincia > 24) return { cedulaInvalida: true };
     const tercerDigito = parseInt(cedula.substring(2, 3), 10);

@@ -29,13 +29,16 @@
         <div class="col-md-6">
           <div class="form-group mb-3">
             <label class="form-label" for="Cedula">Cedula</label>
-            <input type="text" class="form-control" id="Cedula" placeholder="Número de cedula" formControlName="Cedula" />
+            <input type="text" class="form-control" id="Cedula" placeholder="Número de cedula" formControlName="Cedula" maxlength="10" />
             <div *ngIf="frm_cliente.get('Cedula').invalid && frm_cliente.get('Cedula').touched">
               <small *ngIf="frm_cliente.get('Cedula').hasError('required')" style="color: red" class="mt-2 p-2">
                 La cedula es requerida
               </small>
               <small *ngIf="frm_cliente.get('Cedula').hasError('cedulaInvalida')" style="color: red" class="mt-2 p-2">
                 La cedula ingresada no es correcta
+              </small>
+              <small *ngIf="frm_cliente.get('Cedula').hasError('cedulaIncompleta')" style="color: red" class="mt-2 p-2">
+                La cedula debe tener 10 dígitos
               </small>
             </div>
           </div>
