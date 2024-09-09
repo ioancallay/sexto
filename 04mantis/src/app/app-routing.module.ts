@@ -45,6 +45,16 @@ const routes: Routes = [
         canActivate: [UsuariosGuardGuard]
       },
       {
+        path: 'nuevoproducto',
+        loadComponent: () => import('./Components/productos/nuevoproducto/nuevoproducto.component').then((c) => c.NuevoproductoComponent),
+        canActivate: [UsuariosGuardGuard]
+      },
+      {
+        path: 'editarproducto/:idProductos',
+        loadComponent: () => import('./Components/productos/nuevoproducto/nuevoproducto.component').then((c) => c.NuevoproductoComponent),
+        canActivate: [UsuariosGuardGuard]
+      },
+      {
         path: 'productos',
         loadComponent: () => import('./Components/productos/productos.component').then((c) => c.ProductosComponent),
         canActivate: [UsuariosGuardGuard]

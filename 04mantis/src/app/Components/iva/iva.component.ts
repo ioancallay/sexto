@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { UntypedFormBuilder } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { IIva } from 'src/app/Interfaces/iiva';
 import { IvaService } from 'src/app/Services/iva.service';
@@ -7,7 +9,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 @Component({
   selector: 'app-iva',
   standalone: true,
-  imports: [SharedModule, RouterLink],
+  imports: [SharedModule, RouterLink, CommonModule],
   templateUrl: './iva.component.html',
   styleUrl: './iva.component.scss'
 })
