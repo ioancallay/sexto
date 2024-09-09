@@ -33,6 +33,7 @@ export class ProductoService {
   // Método para insertar un nuevo producto junto con el kardex
   insertar(producto: IProductos): Observable<string> {
     const formData = new FormData();
+
     formData.append('Codigo_Barras', producto.Codigo_Barras);
     formData.append('Nombre_Producto', producto.Nombre_Producto);
     formData.append('Graba_IVA', producto.Graba_IVA.toString());

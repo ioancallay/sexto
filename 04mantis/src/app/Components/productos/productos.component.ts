@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   styleUrl: './productos.component.scss'
 })
 export class ProductosComponent implements OnInit {
-  listaproductos: IProductos[] = [];
+  listaProductos: IProductos[] = [];
 
   constructor(private ServicioProductos: ProductoService) {}
 
@@ -24,7 +24,7 @@ export class ProductosComponent implements OnInit {
 
   cargaproductos() {
     this.ServicioProductos.todos().subscribe((data) => {
-      this.listaproductos = data;
+      this.listaProductos = data;
       console.log(data);
     });
   }

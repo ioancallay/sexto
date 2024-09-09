@@ -14,6 +14,10 @@ export class IvaService implements OnInit {
     throw new Error('Method not implemented.');
   }
 
+  activos(): Observable<IIva[]> {
+    return this.http.get<IIva[]>(this.apiurl + 'activos');
+  }
+
   todos(): Observable<IIva[]> {
     return this.http.get<IIva[]>(this.apiurl + 'todos');
   }

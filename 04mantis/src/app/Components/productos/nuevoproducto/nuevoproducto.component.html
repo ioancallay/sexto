@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="d-flex justify-content-between align-items-end mb-4">
       <h3 class="mb-0">
-        {{ titulo }}
+        {{ title }}
         <!--Interpolacion
               sirve para enviar datos desde el .ts hacia el html
             -->
@@ -64,9 +64,9 @@
         <div class="form-group mb-3">
           <label class="form-label" for="IVA_idIVA">IVA</label>
           <select formControlName="IVA_idIVA" class="form-control" id="IVA_idIVA">
-            <!--<option *ngFor="let iva of ivas" [value]="iva.idIVA">
+            <option *ngFor="let iva of listaIva" [value]="iva.idIVA">
                 {{ iva.Detalle }}
-              </option>-->
+              </option>
           </select>
         </div>
 

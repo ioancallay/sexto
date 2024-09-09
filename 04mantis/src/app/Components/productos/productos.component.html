@@ -3,7 +3,7 @@
     <app-card cardTitle="Lista de Productos" blockClass="pc-component">
       <div class="col-md-12 col-xl-8">
         <h5 class="mb-3">
-          <a routerLink="nuevoproducto" class="btn btn-outline-dark">Nuevo Producto</a>
+          <a routerLink="/nuevoproducto" class="btn btn-outline-dark">Nuevo Producto</a>
         </h5>
         <div class="card tbl-card">
           <div class="table-responsive">
@@ -20,7 +20,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let producto of listaproductos; let i = index; trackBy: trackByFn">
+                <tr *ngFor="let producto of listaProductos; let i = index; trackBy: trackByFn">
                   <td>{{ i + 1 }}</td>
                   <td>{{ producto.Codigo_Barras }}</td>
                   <td>{{ producto.Nombre_Producto }}</td>

@@ -16,6 +16,14 @@ error_reporting(1);
 $iva = new Iva();
 
 switch ($_GET["op"]) {
+    case 'activos':
+        $datos = array();
+        $datos = $iva->activos();
+        while ($row = mysqli_fetch_assoc($datos)) {
+            $todos[] = $row;
+        }
+        echo json_encode($todos);
+        break;
 
     case 'todos':
         $datos = array();
