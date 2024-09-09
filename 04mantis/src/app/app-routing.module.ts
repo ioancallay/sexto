@@ -93,10 +93,6 @@ const routes: Routes = [
         loadComponent: () => import('./Components/unidadmedida/unidadmedida.component').then((m) => m.UnidadmedidaComponent)
       },
       {
-        path: 'facturas',
-        loadComponent: () => import('./Components/facturas/facturas.component').then((m) => m.FacturasComponent)
-      },
-      {
         path: 'editarusuario/:idUsuarios',
         loadComponent: () => import('./Components/usuarios/nuevousuario/nuevousuario.component').then((m) => m.NuevousuarioComponent),
         canActivate: [UsuariosGuardGuard]
@@ -108,7 +104,23 @@ const routes: Routes = [
       },
       {
         path: 'usuarios',
-        loadComponent: () => import('./Components/usuarios/usuarios.component').then((m) => m.UsuariosComponent)
+        loadComponent: () => import('./Components/usuarios/usuarios.component').then((m) => m.UsuariosComponent),
+        canActivate: [UsuariosGuardGuard]
+      },
+      {
+        path: 'editariva/:idUsuarios',
+        loadComponent: () => import('./Components/iva/nuevoiva/nuevoiva.component').then((m) => m.NuevoivaComponent),
+        canActivate: [UsuariosGuardGuard]
+      },
+      {
+        path: 'nuevoiva',
+        loadComponent: () => import('./Components/iva/nuevoiva/nuevoiva.component').then((m) => m.NuevoivaComponent),
+        canActivate: [UsuariosGuardGuard]
+      },
+      {
+        path: 'iva',
+        loadComponent: () => import('./Components/iva/iva.component').then((m) => m.IvaComponent),
+        canActivate: [UsuariosGuardGuard]
       }
     ]
   },

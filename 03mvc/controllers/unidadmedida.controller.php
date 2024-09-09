@@ -11,7 +11,7 @@ if ($method == "OPTIONS") {
 // Controlador de Unidad de Medida Tienda Cel@g
 
 require_once '../models/unidadmedida.model.php';
-error_reporting(1);
+error_reporting(0);
 $unidad = new UnidadDeMedida;
 
 switch ($_GET["op"]) {

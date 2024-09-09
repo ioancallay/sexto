@@ -3,4 +3,6 @@ export interface IProductos {
   Codigo_Barras: string;
   Nombre_Producto: string;
   Graba_IVA: number;
+  Valor_Compra: number;
+  Valor_Venta: number;
 }

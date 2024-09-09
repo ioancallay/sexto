@@ -1,1 +1,106 @@
-<p>iva works!</p>
+<div class="row">
+  <div class="col-sm-12">
+    <app-card cardTitle="{{ title }}" blockClass="pc-component">
+      <div class="col-md-12 col-xl-8">
+        <h5 class="mb-3">
+          <a href="nuevoiva" class="btn btn-outline-dark">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-plus"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#2c3e50"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M12 5l0 14" />
+              <path d="M5 12l14 0" />
+            </svg>
+            Nuevo IVA
+          </a>
+        </h5>
+        <div class="card tbl-card">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Detalle</th>
+                  <th>Estado</th>
+                  <th>Valor</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (iva of listaIva; track $index) {
+                  <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ iva.Detalle }}</td>
+                    <!--<td>{{ iva.Tipo == '0' ? 'Presentacion': iva.Tipo == 1 ? 'Unidad de Medida': 'Factor de Conversion' }}</td>-->
+                    @if (iva.Estado == 1) {
+                      <td><button class="btn btn-sm btn-success">Activo</button></td>
+                    } @else {
+                      <td><button class="btn btn-sm btn-warning">Inactivo</button></td>
+                    }
+                    <td>{{ iva.Valor }}</td>
+                    <td>
+                      <button type="button" class="btn btn-outline-success" [routerLink]="['/editarmedida/', iva.idIVA]" title="Edit">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-eraser-off"
+                          width="44"
+                          height="44"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#2c3e50"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M3 3l18 18" />
+                          <path
+                            d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l5 -4.993m2.009 -2.01l3 -3a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41c-1.417 1.431 -2.406 2.432 -2.97 3m-2.02 2.043l-4.211 4.256"
+                          />
+                          <path d="M18 13.3l-6.3 -6.3" />
+                        </svg>
+                      </button>
+                      <button (click)="eliminar(iva.idIVA)" type="button" class="btn btn-outline-danger" title="Delete">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="icon icon-tabler icon-tabler-eraser-off"
+                          width="44"
+                          height="44"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="#2c3e50"
+                          fill="none"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                          <path d="M3 3l18 18" />
+                          <path
+                            d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l5 -4.993m2.009 -2.01l3 -3a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41c-1.417 1.431 -2.406 2.432 -2.97 3m-2.02 2.043l-4.211 4.256"
+                          />
+                          <path d="M18 13.3l-6.3 -6.3" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
+<!--
+        LOS COMPONENTES (.TS) ESTAN OBLIGADOS A IMPORTAR LA REFERENCIA PARA QUE SE PUEDA USAR EN EL HTML
+        -->
