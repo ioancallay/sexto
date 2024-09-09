@@ -9,7 +9,7 @@ class IVA
         //Obtener todas los valores del IVA
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $sql = "SELECT * FROM iva";
+        $sql = "SELECT * FROM IVA";
         $datos = mysqli_query($con, $sql);
         return $datos;
     }
@@ -19,7 +19,7 @@ class IVA
         //Obtener un valor de IVA por ID
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $sql = "SELECT * FROM iva WHERE idIVA = $idIVA";
+        $sql = "SELECT * FROM IVA WHERE idIVA = $idIVA";
         $datos = mysqli_query($con, $sql);
         return $datos;
     }
