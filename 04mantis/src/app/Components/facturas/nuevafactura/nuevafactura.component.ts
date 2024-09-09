@@ -138,6 +138,7 @@ export class NuevafacturaComponent implements OnInit {
     //   }
     // });
   }
+
   calculos() {
     let sub_total = this.frm_factura.get('Sub_total')?.value;
     let iva = this.frm_factura.get('Valor_IVA')?.value;
