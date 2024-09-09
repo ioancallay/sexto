@@ -20,11 +20,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let producto of listaProductos; let i = index; trackBy: trackByFn">
+                <tr *ngFor="let producto of listaproductos; let i = index; trackBy: trackByFn">
                   <td>{{ i + 1 }}</td>
                   <td>{{ producto.Codigo_Barras }}</td>
                   <td>{{ producto.Nombre_Producto }}</td>
-                  <td>{{ producto.Graba_IVA === 1 ? 'Sí' : 'No' }}</td>
+                  <td>{{ +producto.Graba_IVA === 1 ? 'Sí' : 'No' }}</td>
                   <td>{{ producto.Valor_Compra | currency }}</td>
                   <td>{{ producto.Valor_Venta | currency }}</td>
                   <td>

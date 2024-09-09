@@ -45,7 +45,7 @@ export class UsuariosService {
   }
 
   isLoggedIn() {
-    console.log(this.loggedIn.asObservable());
+    // console.log(this.loggedIn.asObservable());
     return this.loggedIn.asObservable();
   }
 

@@ -20,7 +20,7 @@ export class IvaComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarIva();
-    console.log(this.listaIva);
+    // console.log(this.listaIva);
   }
 
   cargarIva() {
