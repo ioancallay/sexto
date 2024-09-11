@@ -47,6 +47,8 @@ export class NuevafacturaComponent implements OnInit {
       Valor_IVA: new FormControl('0.15', Validators.required),
       Clientes_idClientes: new FormControl('-', Validators.required)
     });
+    this.mensaje = 'Desea crear la factura ';
+    this.btn_confirm = 'Crear factura!';
 
     if (this.idFactura > 0) {
       this.FacturaServicio.uno(this.idFactura).subscribe((factura) => {
@@ -58,7 +60,8 @@ export class NuevafacturaComponent implements OnInit {
         this.frm_factura.controls['Valor_IVA'].setValue('0.15');
         this.frm_factura.controls['Clientes_idClientes'].setValue(factura.Clientes_idClientes);
         this.calculos();
-
+        this.mensaje = 'Desea actualizar la factura ';
+        this.btn_confirm = 'Actualizar factura!';
         this.titulo = 'Editar Factura';
         this.btn_save = 'Actualizar factura';
       });
@@ -86,15 +89,6 @@ export class NuevafacturaComponent implements OnInit {
       Valor_IVA: this.frm_factura.get('Valor_IVA')?.value,
       Clientes_idClientes: this.frm_factura.get('Clientes_idClientes')?.value
     };
-    console.log(factura);
-
-    if (this.idFactura > 0) {
-      this.mensaje = 'Desea actualizar la factura ';
-      this.btn_confirm = 'Actualizar factura!';
-    } else {
-      this.mensaje = 'Desea crear la factura ';
-      this.btn_confirm = 'Crear factura!';
-    }
 
     Swal.fire({
       title: 'Facturas',

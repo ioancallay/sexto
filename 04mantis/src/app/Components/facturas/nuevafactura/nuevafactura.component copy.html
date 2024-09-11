@@ -1,0 +1,108 @@
+<div class="card my-5">
+  <div class="card-body">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <h3 class="mb-0">
+        {{ titulo }}
+        <!--Interpolacion
+              sirve para enviar datos desde el .ts hacia el html
+              -->
+      </h3>
+    </div>
+    <div class="row">
+      <form [formGroup]="frm_factura" novalidate (ngSubmit)="grabar()">
+        <div class="form-group mb-3">
+          <label class="form-label" for="Clientes_idClientes">Cliente</label>
+          <select class="form-control" (change)="cambio($event)" id="Clientes_idClientes" formControlName="Clientes_idClientes">
+            <option value="-">Seleccione una opcion</option>
+            @for (cliente of listaClientes; track $index) {
+              <option value="{{ cliente.idClientes }}">{{ cliente.Nombres }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label" for="Fecha">Fecha</label>
+          <input type="date" class="form-control" formControlName="Fecha" id="Fecha" />
+          @if (frm_factura.get('Fecha').invalid && frm_factura.get('Fecha').touched) {
+            <div>
+              @if (frm_factura.get('Fecha').hasError('required')) {
+                <small style="color: red">Los nombres son requeridos</small>
+              }
+            </div>
+          }
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" for="Sub_total">Sub_total</label>
+          <input type="text" class="form-control" formControlName="Sub_total" (blur)="calculos()" id="Sub_total" />
+          @if (frm_factura.get('Sub_total').invalid && frm_factura.get('Sub_total').touched) {
+            <div>
+              @if (frm_factura.get('Sub_total').hasError('required')) {
+                <small style="color: red">Los nombres son requeridos</small>
+              }
+            </div>
+          }
+        </div>
+        <div class="form-group mb-3">
+          <label class="form-label" for="Sub_total_iva">Sub_total_iva</label>
+          <input type="text" class="form-control" formControlName="Sub_total_iva" id="Sub_total_iva" />
+          @if (frm_factura.get('Sub_total_iva').invalid && frm_factura.get('Sub_total_iva').touched) {
+            <div>
+              @if (frm_factura.get('Sub_total_iva').hasError('required')) {
+                <small style="color: red">Los nombres son requeridos</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label" for="Valor_IVA">Valor_IVA</label>
+          <input type="text" class="form-control" formControlName="Valor_IVA" readonly id="Valor_IVA" />
+        </div>
+
+        <div class="form-group mb-3">
+          <label class="form-label" for="Sub_total_iva">Total a Pagar</label>
+          <input type="text" class="form-control" ngValue="total" readonly [value]="totalapagar" />
+        </div>
+
+        <div class="d-grid mt-3">
+          <button type="submit" class="btn btn-outline-primary" [disabled]="frm_factura.invalid">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="icon icon-tabler icon-tabler-checks"
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="#2c3e50"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+              <path d="M7 12l5 5l10 -10" />
+              <path d="M2 12l5 5m5 -5l5 -5" />
+            </svg>
+            {{ btn_save }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!--
+      IMPORTAR => FORMSMODULE  APP.MODULE.TS ||  NUEVOPROVEEDOR.COMPONENT.TS
+      
+      
+      
+      
+      
+      INTRPOLACION => DESDE EL TS AL HTML
+      {{ }} 
+      EVENTOS => EJECUTAR FUNCIONES EN EL TS
+      ()
+      DATA BINDING => DESDE EL HTML AL TS
+      []
+      TWO WAY BIDING => ENVIADO DE DATOS DESDE EL HTML AL TS Y DESDE EL TS AL HTML
+      [()]
+      -->
