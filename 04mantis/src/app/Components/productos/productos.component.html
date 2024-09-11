@@ -27,11 +27,48 @@
                   <td>{{ +producto.Graba_IVA === 1 ? 'Sí' : 'No' }}</td>
                   <td>{{ producto.Valor_Compra | currency }}</td>
                   <td>{{ producto.Valor_Venta | currency }}</td>
-                  <td>
-                    <button type="button" class="btn btn-outline-success" [routerLink]="['/editarproducto', producto.idProductos]">
-                      Editar
+                  <td class="text-end">
+                    <button type="button" class="btn btn-outline-warning" [routerLink]="['/editarproducto/', producto.idProductos]">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-edit"
+                        width="44"
+                        height="44"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#2c3e50"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+                        <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+                        <path d="M16 5l3 3" />
+                      </svg>
                     </button>
-                    <button (click)="eliminar(producto.idProductos)" type="button" class="btn btn-outline-danger">Eliminar</button>
+                    |
+                    <button type="button" class="btn btn-outline-danger" (click)="eliminar(producto.idProductos)">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="icon icon-tabler icon-tabler-eraser-off"
+                        width="44"
+                        height="44"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#2c3e50"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M3 3l18 18" />
+                        <path
+                          d="M19 20h-10.5l-4.21 -4.3a1 1 0 0 1 0 -1.41l5 -4.993m2.009 -2.01l3 -3a1 1 0 0 1 1.41 0l5 5a1 1 0 0 1 0 1.41c-1.417 1.431 -2.406 2.432 -2.97 3m-2.02 2.043l-4.211 4.256"
+                        />
+                        <path d="M18 13.3l-6.3 -6.3" />
+                      </svg>
+                    </button>
                   </td>
                 </tr>
               </tbody>

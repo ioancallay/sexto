@@ -45,12 +45,16 @@ export class NuevoproductoComponent implements OnInit {
     this.btn_save = 'Crear producto';
     this.btn_confirm = 'Crear producto!';
     this.mensaje = 'Desea crear el producto ';
-    this.ServicioUnidadMedida.todos().subscribe((data) => (this.listaUnidadMedida = data));
-    this.ServicioProveedor.todos().subscribe((data) => (this.listaProveedores = data));
-    this.ServicioIva.activos().subscribe((data) => (this.listaIva = data));
+
+    // this.ServicioUnidadMedida.todos().subscribe((data) => (this.listaUnidadMedida = data));
+    // this.ServicioProveedor.todos().subscribe((data) => (this.listaProveedores = data));
+    // this.ServicioIva.activos().subscribe((data) => (this.listaIva = data));
 
     this.crearFormulario();
     this.cargarProductos();
+    this.cargarProveedores();
+    this.cargarIva();
+    this.cargarMedidas();
 
     /*
 1.- Modelo => Solo el procedieminto para realizar un select
@@ -61,11 +65,24 @@ export class NuevoproductoComponent implements OnInit {
 */
   }
 
-  cargarProductos(){
+  cargarMedidas() {
+    this.ServicioUnidadMedida.todos().subscribe((data) => (this.listaUnidadMedida = data));
+  }
+
+  cargarProveedores() {
+    this.ServicioProveedor.todos().subscribe((data) => (this.listaProveedores = data));
+  }
+
+  cargarIva() {
+    this.ServicioIva.activos().subscribe((data) => (this.listaIva = data));
+  }
+
+  cargarProductos() {
     this.ServicioProducto.todos().subscribe((data) => (this.listaProductos = data));
   }
 
   crearFormulario() {
+    // TODO: Otra forma de crear el formulario
     /* this.frm_Producto = this.fb.group({
       Codigo_Barras: ['', Validators.required],
       Nombre_Producto: ['', Validators.required],
@@ -77,6 +94,8 @@ export class NuevoproductoComponent implements OnInit {
       Valor_Venta: ['', [Validators.required, Validators.min(0)]],
       Proveedores_idProveedores: ['', Validators.required]
     });*/
+    this.idProducto = parseInt(this.rutas.snapshot.paramMap.get('idProductos'));
+
     this.frm_Producto = new FormGroup({
       Codigo_Barras: new FormControl('', Validators.required),
       Nombre_Producto: new FormControl('', Validators.required),
@@ -88,6 +107,24 @@ export class NuevoproductoComponent implements OnInit {
       Valor_Venta: new FormControl('', [Validators.required, Validators.min(0)]),
       Proveedores_idProveedores: new FormControl('', Validators.required)
     });
+
+    if (this.idProducto > 0) {
+      this.ServicioProducto.uno(this.idProducto).subscribe((data) => {
+        this.frm_Producto.controls['Codigo_Barras'].setValue(data.Codigo_Barras);
+        this.frm_Producto.controls['Nombre_Producto'].setValue(data.Nombre_Producto);
+        this.frm_Producto.controls['Graba_IVA'].setValue(data.Graba_IVA);
+        this.frm_Producto.controls['Unidad_Medida_idUnidad_Medida'].setValue(data.Unidad_Medida_idUnidad_Medida);
+        this.frm_Producto.controls['IVA_idIVA'].setValue(data.IVA_idIVA);
+        this.frm_Producto.controls['Cantidad'].setValue(data.Cantidad);
+        this.frm_Producto.controls['Valor_Compra'].setValue(data.Valor_Compra);
+        this.frm_Producto.controls['Valor_Venta'].setValue(data.Valor_Venta);
+        this.frm_Producto.controls['Proveedores_idProveedores'].setValue(data.Proveedores_idProveedores);
+        this.btn_save = 'Actualizar producto';
+        this.btn_confirm = 'Actualizar producto!';
+        this.mensaje = 'Desea actualizar el producto ';
+        this.titulo = 'Actualizar producto';
+      });
+    }
   }
 
   grabar() {
@@ -101,12 +138,19 @@ export class NuevoproductoComponent implements OnInit {
       Valor_Compra: this.frm_Producto.value.Valor_Compra,
       Valor_Venta: this.frm_Producto.value.Valor_Venta,
       Proveedores_idProveedores: this.frm_Producto.value.Proveedores_idProveedores
+      // Codigo_Barras: this.frm_Producto.get('Codigo_Barras')?.value,
+      // Nombre_Producto: this.frm_Producto.get('Nombre_Producto')?.value,
+      // Graba_IVA: this.frm_Producto.get('Graba_IVA')?.value,
+      // Unidad_Medida_idUnidad_Medida: this.frm_Producto.get('Unidad_Medida_idUnidad_Medida')?.value,
+      // IVA_idIVA: this.frm_Producto.get('IVA_idIVA')?.value,
+      // Cantidad: this.frm_Producto.get('Cantidad')?.value,
+      // Valor_Compra: this.frm_Producto.get('Valor_Compra')?.value,
+      // Valor_Venta: this.frm_Producto.get('Valor_Venta')?.value,
+      // Proveedores_idProveedores: this.frm_Producto.get('Proveedores_idProveedores')?.value
     };
 
-    console.log(producto);
-
     Swal.fire({
-      title: 'Unidad de Medida',
+      title: 'Productos',
       text: this.mensaje,
       icon: 'warning',
       showCancelButton: true,
@@ -141,18 +185,22 @@ export class NuevoproductoComponent implements OnInit {
         }
       }
     });
+  }
 
-    // if (this.idProducto == 0) {
-    //   this.ServicioProducto.insertar(producto).subscribe((x) => {
-    //     Swal.fire('Exito', 'La unidad de medida se grabo con exito', 'success');
-    //     this.navegacion.navigate(['/producto']);
-    //   });
-    // } else {
-    //   producto.idUnidad_Medida = this.idProducto;
-    //   this.ServicioProducto.actualizar(producto).subscribe((x) => {
-    //     Swal.fire('Exito', 'La unidad de medida se modifico con exito', 'success');
-    //     this.navegacion.navigate(['/producto']);
-    //   });
-    // }
+  cambio(objetoSleect: any) {}
+
+  cambioProveedor(objetoSleect: any) {
+    // Graba_IVA
+    // Unidad_Medida_idUnidad_Medida
+    // IVA_idIVA
+    // Proveedores_idProveedores
+    // let Graba_IVA = objetoSleect.target.value;
+    // let Unidad_Medida_idUnidad_Medida = objetoSleect.target.value;
+    // let IVA_idIVA = objetoSleect.target.value;
+    let idProveedores = objetoSleect.target.value;
+    // this.frm_Producto.get('Graba_IVA')?.setValue(Graba_IVA);
+    // this.frm_Producto.get('Unidad_Medida_idUnidad_Medida')?.setValue(Unidad_Medida_idUnidad_Medida);
+    // this.frm_Producto.get('IVA_idIVA')?.setValue(IVA_idIVA);
+    this.frm_Producto.get('Proveedores_idProveedores')?.setValue(idProveedores);
   }
 }

@@ -44,7 +44,7 @@
 
         <div class="form-group mb-3">
           <label class="form-label" for="Graba_IVA">Graba IVA</label>
-          <select formControlName="Graba_IVA" class="form-control" id="Graba_IVA">
+          <select formControlName="Graba_IVA" class="form-control" id="Graba_IVA" (change)="cambio($event)">
             <option value="1">Sí</option>
             <option value="0">No</option>
           </select>
@@ -52,7 +52,12 @@
 
         <div class="form-group mb-3">
           <label class="form-label" for="Unidad_Medida_idUnidad_Medida">Unidad de Medida</label>
-          <select formControlName="Unidad_Medida_idUnidad_Medida" class="form-control" id="Unidad_Medida_idUnidad_Medida">
+          <select
+            formControlName="Unidad_Medida_idUnidad_Medida"
+            class="form-control"
+            id="Unidad_Medida_idUnidad_Medida"
+            (change)="cambio($event)"
+          >
             @for (unidad of listaUnidadMedida; track $index) {
               <option [value]="unidad.idUnidad_Medida">
                 {{ unidad.Detalle }}
@@ -63,10 +68,10 @@
 
         <div class="form-group mb-3">
           <label class="form-label" for="IVA_idIVA">IVA</label>
-          <select formControlName="IVA_idIVA" class="form-control" id="IVA_idIVA">
+          <select formControlName="IVA_idIVA" class="form-control" id="IVA_idIVA" (change)="cambio($event)">
             <option *ngFor="let iva of listaIva" [value]="iva.idIVA">
-                {{ iva.Detalle }}
-              </option>
+              {{ iva.Detalle }}
+            </option>
           </select>
         </div>
 
@@ -108,9 +113,15 @@
 
         <div class="form-group mb-3">
           <label class="form-label" for="Proveedores_idProveedores">Proveedor</label>
-          <select formControlName="Proveedores_idProveedores" class="form-control" id="Proveedores_idProveedores">
+          <select
+            formControlName="Proveedores_idProveedores"
+            class="form-control"
+            id="Proveedores_idProveedores"
+            (change)="cambioProveedor($event)"
+          >
+            <option value="">Seleccione un proveedor</option>
             @for (proveedor of listaProveedores; track $index) {
-              <option [value]="proveedor.idProveedores">
+              <option value="{{ proveedor.idProveedores }}">
                 {{ proveedor.Nombre_Empresa }}
               </option>
             }

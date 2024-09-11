@@ -34,10 +34,22 @@ class Productos
     {
         $con = new ClaseConectar();
         $con = $con->ProcedimientoConectar();
-        $cadena = "SELECT p.*, u.Detalle as Unidad_Medida, i.Detalle as IVA_Detalle 
-                   FROM `Productos` p 
-                   INNER JOIN Unidad_Medida u ON p.idProductos = u.idUnidad_Medida 
-                   INNER JOIN IVA i ON p.Graba_IVA = i.idIVA 
+        $cadena = "SELECT p.idProductos, 
+            p.Codigo_Barras, 
+            p.Nombre_Producto, 
+            p.Graba_IVA, 
+            u.Detalle as Unidad_Medida, 
+            i.Detalle as IVA_Detalle, 
+            k.Cantidad, 
+            k.Fecha_Transaccion, 
+            k.Valor_Compra, 
+            k.Valor_Venta, 
+            k.Tipo_Transaccion
+            FROM `Productos` p
+            INNER JOIN IVA i ON p.Graba_IVA = i.idIVA
+            INNER JOIN Kardex k ON p.idProductos = k.Productos_idProductos
+			INNER JOIN Unidad_Medida u ON k.Unidad_Medida_idUnidad_Medida = u.idUnidad_Medida
+            -- where k.`Estado` = 1
                    WHERE p.idProductos = $idProductos";
         $datos = mysqli_query($con, $cadena);
         $con->close();
