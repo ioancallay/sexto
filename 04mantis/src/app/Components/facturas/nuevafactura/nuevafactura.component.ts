@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, enableProdMode } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, Event } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -31,9 +31,9 @@ export class NuevafacturaComponent implements OnInit {
       Descripcion: 'Producto 1',
       Cantidad: 2,
       Precio: 1000,
-      Subtotal: 2000,
+      Subtotal: 1000,
       IVA: 12,
-      Total: 2000
+      Total: 1000
     },
     {
       Descripcion: 'Producto 2',
@@ -47,9 +47,9 @@ export class NuevafacturaComponent implements OnInit {
       Descripcion: 'Producto 3',
       Cantidad: 2,
       Precio: 1000,
-      Subtotal: 2000,
+      Subtotal: 3000,
       IVA: 12,
-      Total: 2000
+      Total: 3000
     }
   ];
 
