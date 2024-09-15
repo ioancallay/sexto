@@ -22,7 +22,7 @@ import { start } from 'repl';
 export class NuevafacturaComponent implements OnInit {
   //variables o constantes
   titulo = 'Nueva Factura';
-  nombreCliente: string = '';
+  cliente: string;
   listaClientes: IClientes[] = [];
   listaClientesFiltrada: IClientes[] = [];
   totalapagar: number = 0;
@@ -132,21 +132,26 @@ export class NuevafacturaComponent implements OnInit {
     doc.text('Teléfono: +593 999 999 999', 10, 30);
     doc.text('Email: XXXXXXXXXXXXXXXX', 10, 35);
 
-    this.ClientesServicio.uno(factura.Clientes_idClientes).subscribe((data) => {
-      this.nombreCliente = data.Nombres;
-      doc.text('Aqui: ' + data.Nombres, 10, 5);
-      console.log(this.nombreCliente);
+    this.ClientesServicio.uno(factura.Clientes_idClientes).subscribe((uncliente) => {
+      console.log(uncliente);
+      this.cliente = uncliente.Nombres;
+      console.log(this.cliente);
     });
+
+    console.log(this.cliente);
+    doc.setFontSize(14);
     doc.text('Datos del Cliente', 10, 45);
-    doc.text('Nombre:---------' + this.nombreCliente, 10, 55);
+    doc.setFontSize(12);
+    doc.text('Nombre: ' + this.cliente, 10, 55);
     doc.text('Cédula/RUC: 1234567890', 10, 60);
     doc.text('Dirección: Calle Ejemplo 456, Guayaquil, Ecuador', 10, 65);
     doc.text('Teléfono: +593 987 654 321', 10, 70);
     doc.text('Fecha: ' + factura.Fecha, 10, 75);
 
     doc.setFontSize(12);
-    doc.text('Lista de prodcutos', 10, 80);
+    doc.text('Lista de prodcutos', 105, 80, null, 'center');
 
+    doc.setFontSize(12);
     const columnas = ['Descripcion', 'Cantidad', 'Precio', 'Subtotal', 'IVA', 'Total'];
     const filas: any[] = [];
     this.productoelejido.forEach((producto) => {
