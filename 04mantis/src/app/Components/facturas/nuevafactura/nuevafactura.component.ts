@@ -26,6 +26,9 @@ export class NuevafacturaComponent implements OnInit {
   listaClientes: IClientes[] = [];
   listaClientesFiltrada: IClientes[] = [];
   totalapagar: number = 0;
+  valor_iva: number = 0;
+  iva: number = 0.15;
+  total_pago: number;
   //formgroup
   frm_factura: FormGroup;
   productoelejido: any[] = [
@@ -72,6 +75,14 @@ export class NuevafacturaComponent implements OnInit {
       Clientes_idClientes: new FormControl('', Validators.required)
     });
 
+    this.productoelejido.reduce((valor, producto) => {
+      this.totalapagar += producto.Total;
+    }, 0);
+    let iva = this.frm_factura.get('Valor_IVA')?.value;
+    this.frm_factura.get('Sub_total_iva')?.setValue(this.totalapagar * iva);
+
+    this.frm_factura.get('Sub_total')?.setValue(this.totalapagar);
+    this.frm_factura.get('total')?.setValue(this.totalapagar + this.totalapagar * iva);
     this.ClientesServicio.todos().subscribe({
       next: (data) => {
         this.listaClientes = data;
@@ -149,6 +160,20 @@ export class NuevafacturaComponent implements OnInit {
       startY: 85
     });
 
+    //     Subtotal
+    // 12185.9
+    // SUB TOTAL IVA (15%)
+    // 1827.885
+    // IVA (15%)
+    // 0.15
+    // Total a Pagar
+    this.total_pago = factura.Sub_total + factura.Sub_total_iva;
+    this.total_pago = Math.round(this.total_pago * 100) / 100;
+    doc.text('Subtotal: ' + factura.Sub_total, 10, 200);
+    doc.text('Sub Total IVA: ' + factura.Sub_total_iva, 10, 205);
+    doc.text('IVA: ' + factura.Valor_IVA, 10, 210);
+
+    doc.text('Total a Pagar: ' + this.total_pago, 10, 215);
     doc.save('factura.pdf');
 
     /*
@@ -199,6 +224,10 @@ export class NuevafacturaComponent implements OnInit {
 
     this.productoelejido.reduce((valor, producto) => {
       this.totalapagar += producto.Total;
+      this.totalapagar = Math.round(this.totalapagar * 100) / 100;
     }, 0);
+
+    this.frm_factura.get('Sub_total')?.setValue(this.totalapagar);
+    this.frm_factura.get('Sub_total_iva')?.setValue(this.totalapagar * this.iva);
   }
 }

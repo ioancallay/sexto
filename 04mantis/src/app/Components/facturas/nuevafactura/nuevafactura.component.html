@@ -109,7 +109,7 @@
                   <tr>
                     <th colspan="4" class="text-end">Subtotal</th>
                     <th colspan="2">
-                      <input type="text" class="form-control" formControlName="Sub_total" (blur)="calculos()" />
+                      <input type="text" class="form-control" formControlName="Sub_total" (blur)="calculos()" ngValue="Sub_total" />
                       @if (frm_factura.get('Sub_total').invalid && frm_factura.get('Sub_total').touched) {
                         <div>
                           @if (frm_factura.get('Sub_total').hasError('required')) {
@@ -122,7 +122,7 @@
                   <tr>
                     <th colspan="4" class="text-end">SUB TOTAL IVA (15%)</th>
                     <th colspan="2">
-                      <input type="text" class="form-control" formControlName="Sub_total_iva" />
+                      <input type="text" class="form-control" formControlName="Sub_total_iva" ngValue="Sub_total_iva" />
                       @if (frm_factura.get('Sub_total_iva').invalid && frm_factura.get('Sub_total_iva').touched) {
                         <div>
                           @if (frm_factura.get('Sub_total_iva').hasError('required')) {
