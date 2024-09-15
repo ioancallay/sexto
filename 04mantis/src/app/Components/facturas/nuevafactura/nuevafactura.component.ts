@@ -10,6 +10,7 @@ import { FacturasService } from 'src/app/Services/facturas.service';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
+import { start } from 'repl';
 
 @Component({
   selector: 'app-nuevafactura',
@@ -21,6 +22,7 @@ import html2canvas from 'html2canvas';
 export class NuevafacturaComponent implements OnInit {
   //variables o constantes
   titulo = 'Nueva Factura';
+  nombreCliente: string = '';
   listaClientes: IClientes[] = [];
   listaClientesFiltrada: IClientes[] = [];
   totalapagar: number = 0;
@@ -55,7 +57,7 @@ export class NuevafacturaComponent implements OnInit {
 
   ///////
   constructor(
-    private clietesServicios: ClientesService,
+    private ClientesServicio: ClientesService,
     private facturaService: FacturasService,
     private navegacion: Router,
     private modal: NgbModal
@@ -70,7 +72,7 @@ export class NuevafacturaComponent implements OnInit {
       Clientes_idClientes: new FormControl('', Validators.required)
     });
 
-    this.clietesServicios.todos().subscribe({
+    this.ClientesServicio.todos().subscribe({
       next: (data) => {
         this.listaClientes = data;
         this.listaClientesFiltrada = data;
@@ -83,7 +85,7 @@ export class NuevafacturaComponent implements OnInit {
 
   grabar() {
     //pdf copn html2canva
-
+    /*
     const DATA: any = document.getElementById('impresion');
     html2canvas(DATA).then((html) => {
       const anchoorignal = html.width;
@@ -98,9 +100,41 @@ export class NuevafacturaComponent implements OnInit {
       pdf.addImage(constenido, 'PNG', 0, posicion, imgAncho, imgAlto);
       pdf.save('factura.pdf');
     });
-    /* pdf con jspdf
+    */
+
+    // pdf con jspdf
+
+    let factura: IFacturas = {
+      Fecha: this.frm_factura.get('Fecha')?.value,
+      Sub_total: this.frm_factura.get('Sub_total')?.value,
+      Sub_total_iva: this.frm_factura.get('Sub_total_iva')?.value,
+      Valor_IVA: this.frm_factura.get('Valor_IVA')?.value,
+      Clientes_idClientes: this.frm_factura.get('Clientes_idClientes')?.value
+    };
+
     const doc = new jsPDF();
-    doc.text('Lista de prodcutos', 10, 10);
+    doc.setFontSize(12);
+    doc.text('Factura:', 130, 10);
+    doc.text('No. 001-001-000000001', 150, 10);
+    doc.text('RUC: 1234567890', 10, 20);
+    doc.text('Dirección: Calle Falsa 123, Quito, Ecuador', 10, 25);
+    doc.text('Teléfono: +593 999 999 999', 10, 30);
+    doc.text('Email: XXXXXXXXXXXXXXXX', 10, 35);
+
+    this.ClientesServicio.uno(factura.Clientes_idClientes).subscribe((data) => {
+      this.nombreCliente = data.Nombres;
+      doc.text('Aqui: ' + data.Nombres, 10, 5);
+      console.log(this.nombreCliente);
+    });
+    doc.text('Datos del Cliente', 10, 45);
+    doc.text('Nombre:---------' + this.nombreCliente, 10, 55);
+    doc.text('Cédula/RUC: 1234567890', 10, 60);
+    doc.text('Dirección: Calle Ejemplo 456, Guayaquil, Ecuador', 10, 65);
+    doc.text('Teléfono: +593 987 654 321', 10, 70);
+    doc.text('Fecha: ' + factura.Fecha, 10, 75);
+
+    doc.setFontSize(12);
+    doc.text('Lista de prodcutos', 10, 80);
 
     const columnas = ['Descripcion', 'Cantidad', 'Precio', 'Subtotal', 'IVA', 'Total'];
     const filas: any[] = [];
@@ -112,7 +146,7 @@ export class NuevafacturaComponent implements OnInit {
     (doc as any).autoTable({
       head: [columnas],
       body: filas,
-      start: 20
+      startY: 85
     });
 
     doc.save('factura.pdf');
