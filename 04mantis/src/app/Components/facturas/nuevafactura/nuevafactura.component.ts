@@ -97,67 +97,15 @@ export class NuevafacturaComponent implements OnInit {
     });
   }
 
-  generarPDF() {
-    let factura: IFacturas = {
-      Fecha: this.frm_factura.get('Fecha')?.value,
-      Sub_total: this.frm_factura.get('Sub_total')?.value,
-      Sub_total_iva: this.frm_factura.get('Sub_total_iva')?.value,
-      Valor_IVA: this.frm_factura.get('Valor_IVA')?.value,
+  uncliente() {
+    let cliente_id: any = {
       Clientes_idClientes: this.frm_factura.get('Clientes_idClientes')?.value
     };
-
-    const doc = new jsPDF();
-    doc.setFontSize(12);
-    doc.text('Factura:', 110, 10);
-    doc.text('No. 001-001-000000001', 150, 10);
-    doc.text('RUC: 1234567890', 10, 20);
-    doc.text('Dirección: Calle Falsa 123, Quito, Ecuador', 10, 25);
-    doc.text('Teléfono: +593 999 999 999', 10, 30);
-    doc.text('Email: XXXXXXXXXXXXXXXX', 10, 35);
-
-    this.ClientesServicio.uno(factura.Clientes_idClientes).subscribe((uncliente) => {
-      console.log(uncliente);
+    this.ClientesServicio.uno(cliente_id.Clientes_idClientes).subscribe((uncliente) => {
       this.cliente = uncliente.Nombres;
       console.log(this.cliente);
     });
-
-    console.log(this.cliente);
-    doc.setFontSize(14);
-    doc.text('Datos del Cliente', 10, 45);
-    doc.setFontSize(12);
-    doc.text('Nombre: ' + this.cliente, 10, 55);
-    doc.text('Cédula/RUC: 1234567890', 10, 60);
-    doc.text('Dirección: Calle Ejemplo 456, Guayaquil, Ecuador', 10, 65);
-    doc.text('Teléfono: +593 987 654 321', 10, 70);
-    doc.text('Fecha: ' + factura.Fecha, 10, 75);
-
-    doc.setFontSize(12);
-    doc.text('Lista de prodcutos', 105, 80, null, 'center');
-
-    doc.setFontSize(12);
-    const columnas = ['Descripcion', 'Cantidad', 'Precio', 'Subtotal', 'IVA', 'Total'];
-    const filas: any[] = [];
-    this.productoelejido.forEach((producto) => {
-      const fila = [producto.Descripcion, producto.Cantidad, producto.Precio, producto.Subtotal, producto.IVA, producto.Total];
-      filas.push(fila);
-    });
-
-    (doc as any).autoTable({
-      head: [columnas],
-      body: filas,
-      startY: 85
-    });
-
-    this.total_pago = factura.Sub_total + factura.Sub_total_iva;
-    this.total_pago = Math.round(this.total_pago * 100) / 100;
-    doc.text('Subtotal: ' + factura.Sub_total, 10, 200);
-    doc.text('Sub Total IVA: ' + factura.Sub_total_iva, 10, 205);
-    doc.text('IVA: ' + factura.Valor_IVA, 10, 210);
-
-    doc.text('Total a Pagar: ' + this.total_pago, 10, 215);
-    doc.save('factura.pdf');
   }
-
   grabar() {
     //pdf copn html2canva
     /*
@@ -220,13 +168,6 @@ export class NuevafacturaComponent implements OnInit {
     doc.text('NO', 80, 55);
     doc.text('CONTRIBUYENTE NEGOCIO POPULAR - RÉGIMEN RIMPE', 10, 60);
 
-    this.ClientesServicio.uno(factura.Clientes_idClientes).subscribe((uncliente) => {
-      console.log(uncliente);
-      this.cliente = uncliente.Nombres;
-      console.log(this.cliente);
-    });
-
-    console.log(this.cliente);
     doc.line(10, 65, 200, 65);
 
     doc.setFontSize(8);
@@ -251,23 +192,20 @@ export class NuevafacturaComponent implements OnInit {
       body: filas,
       startY: 100,
       theme: 'grid',
-      columnStyles: { first_name: { fillColor: [41, 128, 185], textColor: 255, fontStyle: 'bold' } }
+      columnStyles: { first_name: { fillColor: [125, 128, 185], textColor: 255, fontStyle: 'bold' } }
     });
 
-    //     Subtotal
-    // 12185.9
-    // SUB TOTAL IVA (15%)
-    // 1827.885
-    // IVA (15%)
-    // 0.15
-    // Total a Pagar
+    const finalY = (doc as any).autoTable.previous.finalY;
     this.total_pago = factura.Sub_total + factura.Sub_total_iva;
     this.total_pago = Math.round(this.total_pago * 100) / 100;
-    doc.text('Subtotal: ' + factura.Sub_total, 10, 200);
-    doc.text('Sub Total IVA: ' + factura.Sub_total_iva, 10, 205);
-    doc.text('IVA: ' + factura.Valor_IVA, 10, 210);
-
-    doc.text('Total a Pagar: ' + this.total_pago, 10, 215);
+    doc.text('Subtotal: ', 155, finalY + 5);
+    doc.text('' + factura.Sub_total, 190, finalY + 5, { align: 'right' });
+    doc.text('Sub Total IVA:', 155, finalY + 10);
+    doc.text('' + factura.Sub_total_iva, 190, finalY + 10, { align: 'right' });
+    doc.text('IVA: ', 155, finalY + 15);
+    doc.text('' + factura.Valor_IVA, 190, finalY + 15, { align: 'right' });
+    doc.text('Total a Pagar: ', 155, finalY + 20);
+    doc.text('' + this.total_pago, 190, finalY + 20, { align: 'right' });
 
     doc.save('factura.pdf');
     // let factura: IFactura = {
