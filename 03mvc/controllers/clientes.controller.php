@@ -9,7 +9,7 @@ if ($method == "OPTIONS") {
 }
 
 require_once('../models/clientes.model.php');
-error_reporting(0);
+error_reporting(1);
 $clientes = new Clientes();
 
 switch ($_GET["op"]) {

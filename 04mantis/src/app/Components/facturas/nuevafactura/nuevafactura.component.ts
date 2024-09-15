@@ -11,6 +11,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
 import { start } from 'repl';
+import JsBarcode from 'jsbarcode';
 
 @Component({
   selector: 'app-nuevafactura',
@@ -28,10 +29,12 @@ export class NuevafacturaComponent implements OnInit {
   totalapagar: number = 0;
   valor_iva: number = 0;
   iva: number = 0.15;
+  num_autorizacion: string = '1209202401171573007100120011000000000444185710217';
   total_pago: number;
   today: Date = new Date();
   pipe: DatePipe = new DatePipe('en-US');
   today_format: string = this.pipe.transform(this.today, 'yyyy-MM-dd HH:mm:ss') as string;
+  today_format_input: string = this.pipe.transform(this.today, 'dd/MM/yyyy') as string;
   //formgroup
   frm_factura: FormGroup;
   productoelejido: any[] = [
@@ -70,6 +73,7 @@ export class NuevafacturaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    JsBarcode('#num_autorizacion', this.num_autorizacion);
     this.frm_factura = new FormGroup({
       Fecha: new FormControl('', Validators.required),
       Sub_total: new FormControl('', Validators.required),
@@ -77,15 +81,6 @@ export class NuevafacturaComponent implements OnInit {
       Valor_IVA: new FormControl('0.15', Validators.required),
       Clientes_idClientes: new FormControl('', Validators.required)
     });
-
-    this.productoelejido.reduce((valor, producto) => {
-      this.totalapagar += producto.Total;
-    }, 0);
-    let iva = this.frm_factura.get('Valor_IVA')?.value;
-    this.frm_factura.get('Sub_total_iva')?.setValue(this.totalapagar * iva);
-
-    this.frm_factura.get('Sub_total')?.setValue(this.totalapagar);
-    this.frm_factura.get('total')?.setValue(this.totalapagar + this.totalapagar * iva);
     this.ClientesServicio.todos().subscribe({
       next: (data) => {
         this.listaClientes = data;
@@ -95,17 +90,29 @@ export class NuevafacturaComponent implements OnInit {
         console.log(e);
       }
     });
+
+    // this.uncliente(this.frm_factura.get('Clientes_idClientes').value);
+    this.productoelejido.reduce((valor, producto) => {
+      this.totalapagar += producto.Total;
+    }, 0);
+    this.frm_factura.setValue({ Fecha: this.today_format_input });
+    // this.frm_factura.get('Fecha')?.value(this.today_format_input);
+    let iva = this.frm_factura.get('Valor_IVA')?.value;
+    this.frm_factura.get('Sub_total_iva')?.setValue(this.totalapagar * iva);
+
+    this.frm_factura.get('Sub_total')?.setValue(this.totalapagar);
+    this.frm_factura.get('total')?.setValue(this.totalapagar + this.totalapagar * iva);
   }
 
-  uncliente() {
-    let cliente_id: any = {
-      Clientes_idClientes: this.frm_factura.get('Clientes_idClientes')?.value
-    };
-    this.ClientesServicio.uno(cliente_id.Clientes_idClientes).subscribe((uncliente) => {
-      this.cliente = uncliente.Nombres;
-      console.log(this.cliente);
-    });
-  }
+  // uncliente(Clientes_idClientes: number) {
+  //   let cliente_id: any = {
+  //     Clientes_idClientes: this.frm_factura.get('Clientes_idClientes')?.value
+  //   };
+  //   this.ClientesServicio.uno(cliente_id.Clientes_idClientes).subscribe((uncliente) => {
+  //     this.cliente = uncliente.Nombres;
+  //     console.log(this.cliente);
+  //   });
+  // }
   grabar() {
     //pdf copn html2canva
     /*
@@ -138,9 +145,9 @@ export class NuevafacturaComponent implements OnInit {
     const doc = new jsPDF('p', 'mm', 'A4');
 
     //agregar imagen
-    var img = new Image();
-    img.src = 'assets/images/1.png';
-    doc.addImage(img, 'PNG', 0, 0, 90, 30);
+    var img_factura = new Image();
+    img_factura.src = 'assets/images/1.png';
+    doc.addImage(img_factura, 'PNG', 0, 0, 90, 30);
 
     //inicio panel izquierdo datos de factura
     doc.setFontSize(16);
@@ -157,28 +164,49 @@ export class NuevafacturaComponent implements OnInit {
     doc.text('EMISIÓN:', 110, 50);
     doc.text('NORMAL', 150, 50);
     doc.text('CLAVE DE ACCESO', 110, 55);
-    doc.text('1209202401171573007100120011000000000444185710217', 110, 60);
+    // const img = document.querySelector('img');
+    // console.log(img);
+    // if (code_bar) {
+    //   doc.addImage(code_bar, 110, 65, 80, 80);
+    // }
+    const img = document.querySelector('#num_autorizacion') as HTMLImageElement;
+
+    if (img) {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+        const imgData = canvas.toDataURL('image/png'); // Convierte la imagen a base64
+        doc.addImage(imgData, 'PNG', 108, 56, 90, 10);
+      }
+    }
+    doc.text('1209202401171573007100120011000000000444185710217', 110, 70);
 
     //fin panel izquierdo datos de factura
     doc.text('NOMBRE: IVAN ANCALLAY REA', 10, 35);
     doc.text('IOASYSTEM', 10, 40);
-    doc.text('Dirección Matriz: Calle Falsa 123, Quito, Ecuador', 10, 45);
-    doc.text('Dirección Sucursal: Calle Falsa 123, Quito, Ecuador', 10, 50);
-    doc.text('OBLIGADO A LLEVAR CONTABILIDAD', 10, 55);
-    doc.text('NO', 80, 55);
-    doc.text('CONTRIBUYENTE NEGOCIO POPULAR - RÉGIMEN RIMPE', 10, 60);
+    doc.text('Dirección Matriz: Calle Falsa 123, Quito, Ecuador', 10, 45, { align: 'justify', lineHeightFactor: 1, maxWidth: 90 });
+    doc.text('Dirección Sucursal: Calle Falsa 123, Quito, Ecuador', 10, 55, { align: 'justify', lineHeightFactor: 1, maxWidth: 90 });
+    doc.text('OBLIGADO A LLEVAR CONTABILIDAD', 10, 65);
+    doc.text('NO', 80, 65);
+    doc.text('CONTRIBUYENTE NEGOCIO POPULAR - RÉGIMEN RIMPE', 10, 70);
 
-    doc.line(10, 65, 200, 65);
+    doc.line(10, 75, 200, 75);
 
+    //inicio panel datos del cliente
     doc.setFontSize(8);
-    doc.text('Razón Social / Nombres y Apellidos: ' + this.cliente, 10, 70);
-    doc.text('Identificación: 1234567890', 10, 75);
-    doc.text('Fecha: ' + this.today_format, 10, 80);
-    doc.text('Dirección: Calle Ejemplo 456, Guayaquil, Ecuador', 10, 85);
-    doc.text('Teléfono: +593 987 654 321', 10, 90);
+    doc.text('Razón Social / Nombres y Apellidos: ' + this.cliente, 10, 80);
+    doc.text('Identificación: 1234567890', 10, 85);
+    doc.text('Fecha: ' + this.today_format, 10, 90);
+    doc.text('Dirección: Calle Ejemplo 456, Guayaquil, Ecuador', 10, 95);
+    doc.text('Teléfono: +593 987 654 321', 10, 100);
+    //fin panel datos del cliente
 
+    //inicio creacion de la tabla de productos
     doc.setFontSize(10);
-    doc.line(10, 95, 200, 95);
+    doc.line(10, 105, 200, 105);
     doc.setFontSize(8);
     const columnas = ['Descripcion', 'Cantidad', 'Precio', 'Subtotal', 'IVA', 'Total'];
     const filas: any[] = [];
@@ -190,14 +218,41 @@ export class NuevafacturaComponent implements OnInit {
     (doc as any).autoTable({
       head: [columnas],
       body: filas,
-      startY: 100,
+      startY: 110,
       theme: 'grid',
-      columnStyles: { first_name: { fillColor: [125, 128, 185], textColor: 255, fontStyle: 'bold' } }
+      columnStyles: { first_name: { fillColor: [255, 255, 255], textColor: 255, fontStyle: 'bold' } },
+      headStyles: {
+        fillColor: [0, 0, 0],
+        textColor: [255, 255, 255],
+        fontSize: 8,
+        padding: 0
+      },
+      styles: {
+        fontSize: 8,
+        font: 'helvetica',
+        cellPadding: 2,
+        minCellHeight: 2
+      }
     });
+    //fin tabla productos
 
+    //inicio panel información adicional
     const finalY = (doc as any).autoTable.previous.finalY;
-    // doc.line(10, finalY + 2, 200, finalY + 2);
+    doc.line(10, finalY + 5, 100, finalY + 5);
+    doc.text('Información Adicional: ', 10, finalY + 10);
+    doc.text('Email:', 10, finalY + 15);
+    doc.text('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX', 30, finalY + 15);
 
+    doc.line(10, finalY + 20, 100, finalY + 20);
+
+    doc.text('Forma de pago: ', 10, finalY + 25, null, { align: 'center' });
+    doc.text('Valor: ', 80, finalY + 25, null, { align: 'center' });
+    doc.text('01 - SIN UTILIZACION DEL SISTEMA FINANCIERO', 10, finalY + 30);
+    doc.text('25.00', 80, finalY + 30);
+    doc.line(10, finalY + 35, 100, finalY + 35);
+    //fin panel información adicional
+
+    //inicio panel totales
     this.total_pago = factura.Sub_total + factura.Sub_total_iva;
     this.total_pago = Math.round(this.total_pago * 100) / 100;
     doc.text('Subtotal: ', 155, finalY + 5);
@@ -208,13 +263,18 @@ export class NuevafacturaComponent implements OnInit {
     doc.text('' + factura.Valor_IVA, 195, finalY + 15, { align: 'right' });
     doc.text('Total a Pagar: ', 155, finalY + 20);
     doc.text('' + this.total_pago, 195, finalY + 20, { align: 'right' });
+    //fin panel totales
 
+    //inicio numeración pie de página
     const pageCount = doc.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
-      doc.setFontSize(10);
+      doc.setFontSize(8);
       doc.text('Página ' + String(i) + ' de ' + String(pageCount), 10, 290);
     }
+    //fin numeración pie de página
+
+    doc.setPage(1);
     doc.save('factura.pdf');
     // let factura: IFactura = {
     //   Fecha: this.frm_factura.get('Fecha')?.value,
