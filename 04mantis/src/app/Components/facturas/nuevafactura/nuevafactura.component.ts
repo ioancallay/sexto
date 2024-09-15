@@ -196,17 +196,25 @@ export class NuevafacturaComponent implements OnInit {
     });
 
     const finalY = (doc as any).autoTable.previous.finalY;
+    // doc.line(10, finalY + 2, 200, finalY + 2);
+
     this.total_pago = factura.Sub_total + factura.Sub_total_iva;
     this.total_pago = Math.round(this.total_pago * 100) / 100;
     doc.text('Subtotal: ', 155, finalY + 5);
-    doc.text('' + factura.Sub_total, 190, finalY + 5, { align: 'right' });
+    doc.text('' + factura.Sub_total, 195, finalY + 5, { align: 'right' });
     doc.text('Sub Total IVA:', 155, finalY + 10);
-    doc.text('' + factura.Sub_total_iva, 190, finalY + 10, { align: 'right' });
+    doc.text('' + factura.Sub_total_iva, 195, finalY + 10, { align: 'right' });
     doc.text('IVA: ', 155, finalY + 15);
-    doc.text('' + factura.Valor_IVA, 190, finalY + 15, { align: 'right' });
+    doc.text('' + factura.Valor_IVA, 195, finalY + 15, { align: 'right' });
     doc.text('Total a Pagar: ', 155, finalY + 20);
-    doc.text('' + this.total_pago, 190, finalY + 20, { align: 'right' });
+    doc.text('' + this.total_pago, 195, finalY + 20, { align: 'right' });
 
+    const pageCount = doc.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(10);
+      doc.text('Página ' + String(i) + ' de ' + String(pageCount), 10, 290);
+    }
     doc.save('factura.pdf');
     // let factura: IFactura = {
     //   Fecha: this.frm_factura.get('Fecha')?.value,
