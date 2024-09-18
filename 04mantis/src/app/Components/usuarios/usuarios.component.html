@@ -42,10 +42,10 @@
                     <td>{{ usuario.Nombre_Usuario }}</td>
                     <td>
                       @if (usuario.Estado == 1) {
-                        <button class="btn btn-success btn-xs btn-sm" disabled>Active</button>
+                        <input class="btn btn-sm btn-success text text-sm" value="Activo" readonly />
                       }
                       @if (usuario.Estado == 0) {
-                        <button class="btn btn-danger btn-xs btn-sm" disabled>Inactive</button>
+                        <input class="btn btn-sm btn-danger text text-sm" value="Inactivo" readonly />
                       }
                     </td>
                     <td class="text">{{ usuario.Detalle }}</td>
